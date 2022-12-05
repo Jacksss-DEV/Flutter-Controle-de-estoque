@@ -459,8 +459,14 @@ class ExampleSource extends AdvancedDataTableSource<ProdutoModel> {
     final controllerENome = TextEditingController();
     final controllerEQuantidade = TextEditingController();
     final controllerELocalidade = TextEditingController();
-    final controllerEDtUltCompra = TextEditingController();
-    final controllerEUltPreco = TextEditingController();
+    MaskedTextController controllerEDtUltCompra = MaskedTextController(
+      mask: '00/00/0000',
+    );
+    MoneyMaskedTextController controllerEUltPreco = MoneyMaskedTextController(
+      leftSymbol: r'R$ ',
+      decimalSeparator: ',',
+      thousandSeparator: '.',
+    );
     final controllerEEntrada = TextEditingController();
     final controllerESaida = TextEditingController();
 
@@ -493,8 +499,10 @@ class ExampleSource extends AdvancedDataTableSource<ProdutoModel> {
                     tooltip: "Editar",
                     onPressed: () {
                       controllerENome.text = lastDetails!.rows[index].nome!;
-                      controllerEQuantidade.text = lastDetails!.rows[index].quantidade!;
-                      controllerELocalidade.text = lastDetails!.rows[index].localidade!;
+                      controllerEQuantidade.text =
+                          lastDetails!.rows[index].quantidade!;
+                      controllerELocalidade.text =
+                          lastDetails!.rows[index].localidade!;
                       controllerEDtUltCompra.text =
                           lastDetails!.rows[index].dt_ult_compra!;
                       controllerEUltPreco.text =
@@ -644,7 +652,6 @@ class ExampleSource extends AdvancedDataTableSource<ProdutoModel> {
                                 },
                                 // initialValue: lastDetails!.rows[index].nome,
                                 controller: controllerEUltPreco,
-                                maxLength: 8,
                                 decoration: InputDecoration(
                                   labelText: 'Ultimo Preço',
                                   icon: Icon(
