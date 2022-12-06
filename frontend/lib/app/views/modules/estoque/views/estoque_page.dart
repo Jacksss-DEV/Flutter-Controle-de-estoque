@@ -31,9 +31,9 @@ class _EstoquePageState extends State<EstoquePage> {
   final searchController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController controllerEsNome = TextEditingController();
+  final controllerEsNome = TextEditingController();
   TextEditingController controllerEsQuantidade = TextEditingController();
-  TextEditingController controllerEsLocalidade = TextEditingController();
+  final controllerEsLocalidade = TextEditingController();
   TextEditingController controllerEsUltCompra = TextEditingController();
   TextEditingController controllerEsUltPreco = TextEditingController();
   TextEditingController controllerEsDtEntrada = TextEditingController();
@@ -416,13 +416,14 @@ class ExampleSource extends AdvancedDataTableSource<ProdutoModel> {
     final TableProdutoStore controllerProduto = TableProdutoStore();
     final ProdutoRepository produtoRepository = ProdutoRepository();
     final ProdutoModel produtoModel = ProdutoModel(
-        nome: 'nome',
-        dt_ult_compra: 'dt_ult_compra',
-        ult_preco: 'ult_preco',
-        localidade: 'localidade',
-        quantidade: 'quantidade',
-        dt_entrada: 'dt_entrada',
-        dt_saida: 'dt_saida',);
+      nome: 'nome',
+      dt_ult_compra: 'dt_ult_compra',
+      ult_preco: 'ult_preco',
+      localidade: 'localidade',
+      quantidade: 'quantidade',
+      dt_entrada: 'dt_entrada',
+      dt_saida: 'dt_saida',
+    );
 
     lastDetails!.rows[index];
 
@@ -614,44 +615,43 @@ class ExampleSource extends AdvancedDataTableSource<ProdutoModel> {
                     tooltip: "Excluir",
                     onPressed: () async {
                       await CoolAlert.show(
-                          width: 500,
-                          context: context,
-                          type: CoolAlertType.confirm,
-                          text: "Deseja mesmo excluir esse produto?",
-                          title: "Atenção",
-                          cancelBtnText: "Não",
-                          backgroundColor: Color(0xff235b69),
-                          confirmBtnText: "Sim, excluir",
-                          confirmBtnColor: Color(0xff235b69),
-                          onConfirmBtnTap: () async {
-                            bool delete = await ProdutoRepository()
-                                .excluirProduto(lastDetails!.rows[index].id!);
-                            print(lastDetails!.rows[index].id);
-                            if (delete) {
-                              Modular.to.pop();
-                              CoolAlert.show(
-                                  width: 500,
-                                  context: context,
-                                  type: CoolAlertType.success,
-                                  backgroundColor: Color(0xff235b69),
-                                  confirmBtnColor: Color(0xff235b69),
-                                  title: "Sucesso",
-                                  text: "Produto excluído com sucesso");
-
-                              reloadPage();
-                            } else {
-                              Modular.to.pop();
-                              CoolAlert.show(
-                                  width: 500,
-                                  context: context,
-                                  type: CoolAlertType.error,
-                                  title: "Falha",
-                                  text: "Ocorreu uma falha ao excluir produto");
-                            }
-                          },
-                          onCancelBtnTap: () {
+                        width: 500,
+                        context: context,
+                        type: CoolAlertType.confirm,
+                        text: "Deseja mesmo excluir esse produto?",
+                        title: "Atenção",
+                        cancelBtnText: "Não",
+                        backgroundColor: Color(0xff235b69),
+                        confirmBtnText: "Sim, excluir",
+                        confirmBtnColor: Color(0xff235b69),
+                        onConfirmBtnTap: () async {
+                          bool delete = await ProdutoRepository()
+                              .excluirProduto(lastDetails!.rows[index].id!);
+                          if (delete) {
                             Modular.to.pop();
-                          });
+                            CoolAlert.show(
+                                width: 500,
+                                context: context,
+                                type: CoolAlertType.success,
+                                backgroundColor: Color(0xff235b69),
+                                confirmBtnColor: Color(0xff235b69),
+                                title: "Sucesso",
+                                text: "Produto excluído com sucesso");
+                            reloadPage();
+                          } else {
+                            Modular.to.pop();
+                            CoolAlert.show(
+                                width: 500,
+                                context: context,
+                                type: CoolAlertType.error,
+                                title: "Falha",
+                                text: "Ocorreu uma falha ao excluir produto");
+                          }
+                        },
+                        onCancelBtnTap: () {
+                          Modular.to.pop();
+                        },
+                      );
                     },
                     icon: Icon(
                       Icons.delete,

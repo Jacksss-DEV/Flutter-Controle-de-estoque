@@ -4,7 +4,6 @@ import 'package:test/test.dart';
 void main() {
   test('generateBCrypt ...', () async {
     final senha = ConfigBCrypt().generateBCrypt(password: "password");
-    print(senha);
   });
 
   test('verifySenha', () async {

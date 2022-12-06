@@ -58,9 +58,8 @@ class IProdutosRepo {
   }
 
   int atualizarProduto(ModelProdutos produtos, ModelEstoque estoque) {
-    ResultSet selectProdutos = _db.select(
-        'SELECT quantidade FROM estoque WHERE id_produto=?;', [produtos.id]);
-    print(selectProdutos.first['quantidade']);
+    // ResultSet selectProdutos = _db.select(
+    //     'SELECT quantidade FROM estoque WHERE id_produto=?;', [produtos.id]);
     PreparedStatement queryProdutos = _db.prepare(
         'UPDATE produtos SET nome=?, dt_ult_compra=?, ult_preco=? WHERE id=?');
     queryProdutos.execute([
@@ -70,16 +69,13 @@ class IProdutosRepo {
       produtos.id,
     ]);
     final result = _db.getUpdatedRows();
-    if (estoque.quantidade != selectProdutos.first['quantidade']) {
       DateTime data_At = DateTime.now();
       String dt_saida = "${data_At.day}/${data_At.month}/${data_At.year}";
       PreparedStatement queryEstoque = _db.prepare(
-          'UPDATE estoque SET dt_saida=?, quantidade=? WHERE id_produto=?');
-      queryEstoque.execute([dt_saida, estoque.quantidade, produtos.id]);
+          'UPDATE estoque SET dt_saida=?, quantidade=?, localidade=? WHERE id_produto=?');
+      queryEstoque.execute([dt_saida, estoque.quantidade, estoque.localidade, produtos.id]);    
+      queryProdutos.dispose();
       queryEstoque.dispose();
-    }
-    print(estoque.quantidade != selectProdutos.first['quantidade']);
-    queryProdutos.dispose();
     return result;
   }
 

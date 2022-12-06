@@ -260,7 +260,6 @@ class _HomeProdutoState extends State<HomeProduto> {
                                       return null;
                                     },
                                     controller: controllerUltCompra,
-                                    // maxLength: 8,
                                     decoration: InputDecoration(
                                       labelText: 'Última compra',
                                       hintText:
